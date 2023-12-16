@@ -37,6 +37,7 @@ impl BallBundle {
         }
     }
 }
+
 fn setup(
     mut commands: Commands,
     meshes: ResMut<Assets<Mesh>>,
