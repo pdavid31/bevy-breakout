@@ -1,6 +1,6 @@
-use bevy::{a11y::accesskit::Vec2, prelude::*, sprite::MaterialMesh2dBundle};
+use bevy::{prelude::*, sprite::MaterialMesh2dBundle};
 
-use crate::collision::Collider;
+use crate::velocity::Velocity;
 
 const BALL_STARTING_POSITION: Vec3 = Vec3::new(0.0, -50.0, 1.0);
 const BALL_SIZE: Vec3 = Vec3::new(30.0, 30.0, 0.0);
@@ -15,7 +15,7 @@ struct Ball;
 pub struct BallBundle {
     material_bundle: MaterialMesh2dBundle<ColorMaterial>,
     ball: Ball,
-    // TODO: add velocity
+    velocity: Velocity,
 }
 
 impl BallBundle {
@@ -33,6 +33,7 @@ impl BallBundle {
                 ..default()
             },
             ball: Ball,
+            velocity: Velocity::new(INITIAL_BALL_DIRECTION.normalize() * BALL_SPEED),
         }
     }
 }
