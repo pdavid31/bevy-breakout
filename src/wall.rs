@@ -3,11 +3,11 @@ use bevy::prelude::*;
 use crate::collision::Collider;
 
 // x coordinates
-const LEFT_WALL: f32 = -450.0;
-const RIGHT_WALL: f32 = 450.0;
+pub const LEFT_WALL: f32 = -450.0;
+pub const RIGHT_WALL: f32 = 450.0;
 // y coordinates
 pub const BOTTOM_WALL: f32 = -300.0;
-const TOP_WALL: f32 = 300.0;
+pub const TOP_WALL: f32 = 300.0;
 // render line thickness
 const WALL_THICKNESS: f32 = 10.0;
 // wall color

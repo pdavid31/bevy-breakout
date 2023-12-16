@@ -19,7 +19,7 @@ use wall::WallPlugin;
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
-        // .add_plugins(BlockPlugin)
+        .add_plugins(BrickPlugin)
         // .add_plugins(CollisionPlugin)
         .add_plugins(PaddlePlugin)
         .add_plugins(BackgroundPlugin)
