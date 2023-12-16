@@ -5,6 +5,7 @@ mod camera;
 mod collision;
 mod paddle;
 mod score;
+mod velocity;
 mod wall;
 
 use bevy::prelude::*;
@@ -16,6 +17,7 @@ use camera::CameraPlugin;
 use collision::CollisionPlugin;
 use paddle::PaddlePlugin;
 use score::ScorePlugin;
+use velocity::VelocityPlugin;
 use wall::WallPlugin;
 
 fn main() {
@@ -28,6 +30,7 @@ fn main() {
         // .add_plugins(CollisionPlugin)
         .add_plugins(PaddlePlugin)
         // .add_plugins(ScorePlugin)
+        .add_plugins(VelocityPlugin)
         .add_plugins(WallPlugin)
         .run();
 }
