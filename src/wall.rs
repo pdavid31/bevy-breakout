@@ -6,7 +6,7 @@ use crate::collision::Collider;
 const LEFT_WALL: f32 = -450.0;
 const RIGHT_WALL: f32 = 450.0;
 // y coordinates
-const BOTTOM_WALL: f32 = -300.0;
+pub const BOTTOM_WALL: f32 = -300.0;
 const TOP_WALL: f32 = 300.0;
 // render line thickness
 const WALL_THICKNESS: f32 = 10.0;

@@ -1,6 +1,9 @@
 use bevy::prelude::*;
 
-use crate::{collision::Collider, wall::Wall};
+use crate::{
+    collision::Collider,
+    wall::{Wall, BOTTOM_WALL},
+};
 
 // These constants are defined in `Transform` units
 // Using the default 2D camera they correspond 1:1 with screen pixels.
@@ -43,29 +46,12 @@ impl PaddleBundle {
     }
 }
 
-fn setup(mut commands: Commands, walls_query: Query<&Transform, With<Wall>>) {
-    // get the wall with the lowest y
-    let lowest_wall_opt = walls_query.iter().min_by(|a, b| {
-        a.translation
-            .y
-            // f32 and f64 don't implement std::cmp::Ord
-            // since these types can also be NaN.
-            // thus, we use the partial_cmp here and fall
-            // back to Less if the Option is None
-            .partial_cmp(&b.translation.y)
-            .unwrap_or(std::cmp::Ordering::Less)
-    });
+fn setup(mut commands: Commands) {
+    // calculate the y position of the paddle
+    let paddle_y = BOTTOM_WALL + GAP_BETWEEN_PADDLE_AND_FLOOR;
+    let paddle_location = Vec2::new(0.0, paddle_y);
 
-    // if we find a wall, we spawn the paddle above that
-    // the distance is given by GAP_BETWEEN_PADDLE_AND_FLOOR
-    if let Some(lowest_wall) = lowest_wall_opt {
-        let paddle_y = lowest_wall.translation.y + GAP_BETWEEN_PADDLE_AND_FLOOR;
-        let paddle_location = Vec2::new(0.0, paddle_y);
-
-        commands.spawn(PaddleBundle::new(paddle_location));
-    } else {
-        panic!("no wall found when trying to spawn the paddle");
-    }
+    commands.spawn(PaddleBundle::new(paddle_location));
 }
 
 pub struct PaddlePlugin;
