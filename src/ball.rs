@@ -9,7 +9,7 @@ const INITIAL_BALL_DIRECTION: Vec2 = Vec2::new(0.5, -0.5);
 const BALL_COLOR: Color = Color::rgb(0.94902, 0.26275, 0.20000);
 
 #[derive(Component)]
-struct Ball;
+pub struct Ball;
 
 #[derive(Bundle)]
 pub struct BallBundle {
