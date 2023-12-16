@@ -3,6 +3,12 @@ use bevy::prelude::*;
 #[derive(Resource)]
 pub struct Score(usize);
 
+impl Score {
+    pub fn increment(&mut self) {
+        self.0 += 1;
+    }
+}
+
 pub struct ScorePlugin;
 
 impl Plugin for ScorePlugin {
