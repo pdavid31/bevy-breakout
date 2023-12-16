@@ -1,5 +1,5 @@
 mod background;
-mod block;
+mod brick;
 mod camera;
 mod collision;
 mod paddle;
@@ -9,7 +9,7 @@ mod wall;
 use bevy::prelude::*;
 
 use background::BackgroundPlugin;
-use block::BlockPlugin;
+use brick::BrickPlugin;
 use camera::CameraPlugin;
 use collision::CollisionPlugin;
 use paddle::PaddlePlugin;

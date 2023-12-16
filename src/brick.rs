@@ -1,10 +1,10 @@
 use bevy::prelude::*;
 
 #[derive(Component)]
-pub struct Block;
+pub struct Brick;
 
-pub struct BlockPlugin;
+pub struct BrickPlugin;
 
-impl Plugin for BlockPlugin {
+impl Plugin for BrickPlugin {
     fn build(&self, app: &mut App) {}
 }
