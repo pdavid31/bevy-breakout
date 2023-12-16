@@ -27,9 +27,9 @@ fn main() {
         .add_plugins(BallPlugin)
         .add_plugins(BrickPlugin)
         .add_plugins(CameraPlugin)
-        // .add_plugins(CollisionPlugin)
+        .add_plugins(CollisionPlugin)
         .add_plugins(PaddlePlugin)
-        // .add_plugins(ScorePlugin)
+        .add_plugins(ScorePlugin)
         .add_plugins(VelocityPlugin)
         .add_plugins(WallPlugin)
         .run();
