@@ -7,7 +7,7 @@ use crate::{
 
 const BRICK_SIZE: Vec2 = Vec2::new(100.0, 30.0);
 
-const BRICK_COLOR: Color = Color::rgb(0.5, 0.5, 1.0);
+const BRICK_COLOR: Color = Color::rgb(0.33725, 0.30196, 0.29020);
 
 const GAP_BETWEEN_BRICKS: f32 = 5.0;
 const GAP_BETWEEN_BRICKS_AND_SIDES: f32 = 20.0;

@@ -1,9 +1,6 @@
 use bevy::prelude::*;
 
-use crate::{
-    collision::Collider,
-    wall::{Wall, BOTTOM_WALL},
-};
+use crate::{collision::Collider, wall::BOTTOM_WALL};
 
 // These constants are defined in `Transform` units
 // Using the default 2D camera they correspond 1:1 with screen pixels.
@@ -13,7 +10,7 @@ const PADDLE_SPEED: f32 = 500.0;
 // How close can the paddle get to the wall
 const PADDLE_PADDING: f32 = 10.0;
 // color
-const PADDLE_COLOR: Color = Color::rgb(0.3, 0.3, 0.7);
+const PADDLE_COLOR: Color = Color::rgb(0.72941, 0.10588, 0.11373);
 
 #[derive(Component)]
 pub struct Paddle;

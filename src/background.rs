@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-const BACKGROUND_COLOR: Color = Color::rgb(0.4, 0.6, 0.6);
+const BACKGROUND_COLOR: Color = Color::rgb(0.96863, 0.95686, 0.95294);
 const BACKGROUND: ClearColor = ClearColor(BACKGROUND_COLOR);
 
 pub struct BackgroundPlugin;

@@ -11,7 +11,7 @@ pub const TOP_WALL: f32 = 300.0;
 // render line thickness
 const WALL_THICKNESS: f32 = 10.0;
 // wall color
-const WALL_COLOR: Color = Color::rgb(0.8, 0.8, 0.8);
+const WALL_COLOR: Color = Color::rgb(0.35686, 0.13725, 0.20000);
 
 #[derive(Component)]
 pub struct Wall;
