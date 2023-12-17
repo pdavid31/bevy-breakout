@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use bevy_rapier2d::prelude::*;
 
 const SCOREBOARD_FONT_SIZE: f32 = 40.0;
 const SCOREBOARD_FONT_COLOR: Color = Color::rgb(0.35686, 0.13725, 0.20000);
@@ -52,6 +53,17 @@ fn update_score(score: Res<Score>, mut query: Query<&mut Text>) {
     text.sections[1].value = score.0.to_string();
 }
 
+fn update_score_on_collision(
+    mut collision_events: EventReader<CollisionEvent>,
+    mut score: ResMut<Score>,
+) {
+    for collision_event in collision_events.read() {
+        if let CollisionEvent::Stopped(_, _, _) = collision_event {
+            score.increment();
+        };
+    }
+}
+
 fn setup(mut commands: Commands) {
     commands.spawn(ScoreBundle::new());
 }
@@ -62,6 +74,7 @@ impl Plugin for ScorePlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(Score(0))
             .add_systems(Startup, setup)
+            .add_systems(FixedUpdate, update_score_on_collision)
             .add_systems(FixedUpdate, update_score);
     }
 }
