@@ -20,7 +20,6 @@ pub struct PaddleBundle {
     paddle: Paddle,
     controller: KinematicCharacterController,
     collider: Collider,
-    velocity: Velocity,
 }
 
 impl PaddleBundle {
@@ -41,10 +40,6 @@ impl PaddleBundle {
             controller: KinematicCharacterController::default(),
             paddle: Paddle,
             collider: Collider::cuboid(0.5, 0.5),
-            velocity: Velocity {
-                linvel: Vec2::new(0.0, 0.0),
-                ..default()
-            },
         }
     }
 }
