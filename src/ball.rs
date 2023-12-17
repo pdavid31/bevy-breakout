@@ -1,6 +1,5 @@
 use bevy::{prelude::*, sprite::MaterialMesh2dBundle};
-
-use crate::velocity::Velocity;
+use bevy_rapier2d::prelude::*;
 
 const BALL_STARTING_POSITION: Vec3 = Vec3::new(0.0, -50.0, 1.0);
 const BALL_SIZE: Vec3 = Vec3::new(30.0, 30.0, 0.0);
@@ -15,7 +14,11 @@ pub struct Ball;
 pub struct BallBundle {
     material_bundle: MaterialMesh2dBundle<ColorMaterial>,
     ball: Ball,
+    body: RigidBody,
+    collider: Collider,
     velocity: Velocity,
+    gravity: GravityScale,
+    restitution: Restitution,
 }
 
 impl BallBundle {
@@ -33,7 +36,17 @@ impl BallBundle {
                 ..default()
             },
             ball: Ball,
-            velocity: Velocity::new(INITIAL_BALL_DIRECTION.normalize() * BALL_SPEED),
+            body: RigidBody::Dynamic,
+            collider: Collider::ball(BALL_SIZE.x / 64.0),
+            velocity: Velocity {
+                linvel: INITIAL_BALL_DIRECTION.normalize() * BALL_SPEED,
+                angvel: 0.0,
+            },
+            gravity: GravityScale(0.0),
+            restitution: Restitution {
+                coefficient: 1.0,
+                combine_rule: CoefficientCombineRule::Average,
+            },
         }
     }
 }
