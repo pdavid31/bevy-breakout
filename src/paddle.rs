@@ -1,9 +1,7 @@
 use bevy::prelude::*;
+use bevy_rapier2d::prelude::*;
 
-use crate::{
-    collision::Collider,
-    wall::{BOTTOM_WALL, LEFT_WALL, RIGHT_WALL, WALL_THICKNESS},
-};
+use crate::wall::{BOTTOM_WALL, LEFT_WALL, RIGHT_WALL, WALL_THICKNESS};
 
 // These constants are defined in `Transform` units
 // Using the default 2D camera they correspond 1:1 with screen pixels.
@@ -22,7 +20,10 @@ pub struct Paddle;
 pub struct PaddleBundle {
     sprite_bundle: SpriteBundle,
     paddle: Paddle,
+    controller: KinematicCharacterController,
+    body: RigidBody,
     collider: Collider,
+    velocity: Velocity,
 }
 
 impl PaddleBundle {
@@ -40,18 +41,24 @@ impl PaddleBundle {
                 },
                 ..default()
             },
+            controller: KinematicCharacterController::default(),
+            body: RigidBody::KinematicPositionBased,
             paddle: Paddle,
-            collider: Collider,
+            collider: Collider::cuboid(PADDLE_SIZE.x / 256.0, PADDLE_SIZE.y / 32.0),
+            velocity: Velocity {
+                linvel: Vec2::new(0.0, 0.0),
+                angvel: 0.0,
+            },
         }
     }
 }
 
 fn move_paddle(
     keyboard_input: Res<Input<KeyCode>>,
-    mut query: Query<&mut Transform, With<Paddle>>,
+    mut query: Query<&mut KinematicCharacterController, With<Paddle>>,
     time: Res<Time>,
 ) {
-    let mut paddle_transform = query.single_mut();
+    let mut controller = query.single_mut();
     let mut direction = 0.0;
 
     if keyboard_input.pressed(KeyCode::Left) {
@@ -62,16 +69,11 @@ fn move_paddle(
         direction += 1.0;
     }
 
-    // calculate the new horizontal paddle position based on player input
-    let new_paddle_position =
-        paddle_transform.translation.x + direction * PADDLE_SPEED * time.delta_seconds();
+    // construct the movement vector
+    let to_move = Vec2::new(direction * PADDLE_SPEED * time.delta_seconds(), 0.0);
 
-    // update the paddle position, making sure
-    // it does not cause the paddle to leave the arena
-    let left_bound = LEFT_WALL + WALL_THICKNESS / 2.0 - PADDLE_SIZE.x / 2.0 + PADDLE_PADDING;
-    let right_bound = RIGHT_WALL + WALL_THICKNESS / 2.0 - PADDLE_SIZE.x / 2.0 + PADDLE_PADDING;
-
-    paddle_transform.translation.x = new_paddle_position.clamp(left_bound, right_bound);
+    // apply the new movement
+    controller.translation = Some(to_move);
 }
 
 fn setup(mut commands: Commands) {
