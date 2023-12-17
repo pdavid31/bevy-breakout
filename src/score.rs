@@ -1,6 +1,8 @@
 use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
 
+use crate::brick::BrickDestroyedEvent;
+
 const SCOREBOARD_FONT_SIZE: f32 = 40.0;
 const SCOREBOARD_FONT_COLOR: Color = Color::rgb(0.35686, 0.13725, 0.20000);
 
@@ -54,13 +56,11 @@ fn update_score(score: Res<Score>, mut query: Query<&mut Text>) {
 }
 
 fn update_score_on_collision(
-    mut collision_events: EventReader<CollisionEvent>,
+    mut brick_events: EventReader<BrickDestroyedEvent>,
     mut score: ResMut<Score>,
 ) {
-    for collision_event in collision_events.read() {
-        if let CollisionEvent::Stopped(_, _, _) = collision_event {
-            score.increment();
-        };
+    for _ in brick_events.read() {
+        score.increment();
     }
 }
 
