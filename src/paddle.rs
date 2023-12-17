@@ -20,6 +20,7 @@ pub struct PaddleBundle {
     paddle: Paddle,
     controller: KinematicCharacterController,
     collider: Collider,
+    dominance: Dominance,
 }
 
 impl PaddleBundle {
@@ -40,6 +41,7 @@ impl PaddleBundle {
             controller: KinematicCharacterController::default(),
             paddle: Paddle,
             collider: Collider::cuboid(0.5, 0.5),
+            dominance: Dominance::group(10),
         }
     }
 }
