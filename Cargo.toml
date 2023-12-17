@@ -9,6 +9,7 @@ edition = "2021"
 # dynamic linking feature should be removed before game release
 # see: https://bevyengine.org/learn/book/getting-started/setup/#enable-fast-compiles-optional
 bevy = { version = "0.12.1", features = ["dynamic_linking"] }
+bevy_rapier2d = { version = "0.23.0", features = ["debug-render-2d", "parallel"] }
 
 # Enable a small amount of optimization in debug mode
 [profile.dev]
