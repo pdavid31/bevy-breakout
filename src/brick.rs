@@ -1,7 +1,8 @@
 use bevy::prelude::*;
+use bevy_rapier2d::prelude::*;
 
 use crate::{
-    collision::Collider,
+    score::Score,
     wall::{BOTTOM_WALL, LEFT_WALL, RIGHT_WALL, TOP_WALL},
 };
 
@@ -22,6 +23,8 @@ pub struct BrickBundle {
     sprite_bundle: SpriteBundle,
     brick: Brick,
     collider: Collider,
+    body: RigidBody,
+    active: ActiveEvents,
 }
 
 impl BrickBundle {
@@ -40,7 +43,9 @@ impl BrickBundle {
                 ..default()
             },
             brick: Brick,
-            collider: Collider,
+            collider: Collider::cuboid(BRICK_SIZE.x / 200.0, BRICK_SIZE.y / 64.0),
+            body: RigidBody::Fixed,
+            active: ActiveEvents::COLLISION_EVENTS,
         }
     }
 }
@@ -86,10 +91,22 @@ fn setup(mut commands: Commands) {
     }
 }
 
+fn remove_brick_on_collision(
+    mut commands: Commands,
+    mut collision_events: EventReader<CollisionEvent>,
+) {
+    for collision_event in collision_events.read() {
+        if let CollisionEvent::Stopped(brick, _, _) = collision_event {
+            commands.entity(*brick).despawn();
+        };
+    }
+}
+
 pub struct BrickPlugin;
 
 impl Plugin for BrickPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Startup, setup);
+        app.add_systems(Startup, setup)
+            .add_systems(FixedUpdate, remove_brick_on_collision);
     }
 }
