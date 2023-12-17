@@ -40,12 +40,12 @@ impl BallBundle {
             collider: Collider::ball(BALL_SIZE.x / 64.0),
             velocity: Velocity {
                 linvel: INITIAL_BALL_DIRECTION.normalize() * BALL_SPEED,
-                angvel: 0.0,
+                ..default()
             },
             gravity: GravityScale(0.0),
             restitution: Restitution {
-                coefficient: 1.0,
-                combine_rule: CoefficientCombineRule::Average,
+                coefficient: 2.0,
+                ..default()
             },
         }
     }
