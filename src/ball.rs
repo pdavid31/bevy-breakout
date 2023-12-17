@@ -37,7 +37,7 @@ impl BallBundle {
             },
             ball: Ball,
             body: RigidBody::Dynamic,
-            collider: Collider::ball(BALL_SIZE.x / 64.0),
+            collider: Collider::ball(0.5),
             velocity: Velocity {
                 linvel: INITIAL_BALL_DIRECTION.normalize() * BALL_SPEED,
                 ..default()

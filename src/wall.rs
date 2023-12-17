@@ -78,7 +78,7 @@ impl WallBundle {
             },
             wall: Wall,
             body: RigidBody::Fixed,
-            collider: Collider::cuboid(location.size().x / 16.0, location.size().y / 16.0),
+            collider: Collider::cuboid(0.5, 0.5),
         }
     }
 }

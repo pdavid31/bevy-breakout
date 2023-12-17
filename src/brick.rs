@@ -40,7 +40,7 @@ impl BrickBundle {
                 ..default()
             },
             brick: Brick,
-            collider: Collider::cuboid(BRICK_SIZE.x / 200.0, BRICK_SIZE.y / 64.0),
+            collider: Collider::cuboid(0.5, 0.5),
             body: RigidBody::Fixed,
             active: ActiveEvents::COLLISION_EVENTS,
         }
