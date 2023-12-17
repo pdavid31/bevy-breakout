@@ -19,6 +19,7 @@ pub struct BallBundle {
     velocity: Velocity,
     gravity: GravityScale,
     restitution: Restitution,
+    ccd: Ccd,
 }
 
 impl BallBundle {
@@ -47,6 +48,7 @@ impl BallBundle {
                 coefficient: 2.0,
                 ..default()
             },
+            ccd: Ccd::enabled(),
         }
     }
 }
