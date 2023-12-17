@@ -1,6 +1,5 @@
 use bevy::prelude::*;
-
-use crate::collision::Collider;
+use bevy_rapier2d::prelude::*;
 
 // x coordinates
 pub const LEFT_WALL: f32 = -450.0;
@@ -52,6 +51,7 @@ impl WallLocation {
 struct WallBundle {
     sprite_bundle: SpriteBundle,
     wall: Wall,
+    body: RigidBody,
     collider: Collider,
 }
 
@@ -77,7 +77,8 @@ impl WallBundle {
                 ..default()
             },
             wall: Wall,
-            collider: Collider,
+            body: RigidBody::Fixed,
+            collider: Collider::cuboid(location.size().x / 16.0, location.size().y / 16.0),
         }
     }
 }
