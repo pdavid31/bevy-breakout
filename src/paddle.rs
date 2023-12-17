@@ -1,15 +1,13 @@
 use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
 
-use crate::wall::{BOTTOM_WALL, LEFT_WALL, RIGHT_WALL, WALL_THICKNESS};
+use crate::wall::BOTTOM_WALL;
 
 // These constants are defined in `Transform` units
 // Using the default 2D camera they correspond 1:1 with screen pixels.
 const PADDLE_SIZE: Vec3 = Vec3::new(120.0, 20.0, 0.0);
 const GAP_BETWEEN_PADDLE_AND_FLOOR: f32 = 60.0;
 const PADDLE_SPEED: f32 = 500.0;
-// How close can the paddle get to the wall
-const PADDLE_PADDING: f32 = 10.0;
 // color
 const PADDLE_COLOR: Color = Color::rgb(0.72941, 0.10588, 0.11373);
 
@@ -21,7 +19,6 @@ pub struct PaddleBundle {
     sprite_bundle: SpriteBundle,
     paddle: Paddle,
     controller: KinematicCharacterController,
-    body: RigidBody,
     collider: Collider,
     velocity: Velocity,
 }
@@ -42,12 +39,11 @@ impl PaddleBundle {
                 ..default()
             },
             controller: KinematicCharacterController::default(),
-            body: RigidBody::KinematicPositionBased,
             paddle: Paddle,
             collider: Collider::cuboid(PADDLE_SIZE.x / 256.0, PADDLE_SIZE.y / 32.0),
             velocity: Velocity {
                 linvel: Vec2::new(0.0, 0.0),
-                angvel: 0.0,
+                ..default()
             },
         }
     }

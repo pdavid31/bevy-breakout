@@ -1,10 +1,7 @@
 use bevy::prelude::*;
 use bevy_rapier2d::prelude::*;
 
-use crate::{
-    score::Score,
-    wall::{BOTTOM_WALL, LEFT_WALL, RIGHT_WALL, TOP_WALL},
-};
+use crate::wall::{BOTTOM_WALL, LEFT_WALL, RIGHT_WALL, TOP_WALL};
 
 const BRICK_SIZE: Vec2 = Vec2::new(100.0, 30.0);
 
