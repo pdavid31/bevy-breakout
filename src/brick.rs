@@ -47,6 +47,9 @@ impl BrickBundle {
     }
 }
 
+#[derive(Event)]
+pub struct BrickDestroyedEvent;
+
 fn setup(mut commands: Commands) {
     let total_width_of_bricks = (RIGHT_WALL - LEFT_WALL) - 2.0 * GAP_BETWEEN_BRICKS_AND_SIDES;
     let bottom_edge_of_bricks = BOTTOM_WALL + GAP_BETWEEN_BRICKS_AND_PADDLE;
@@ -91,10 +94,23 @@ fn setup(mut commands: Commands) {
 fn remove_brick_on_collision(
     mut commands: Commands,
     mut collision_events: EventReader<CollisionEvent>,
+    query: Query<Entity, With<Brick>>,
+    mut events: EventWriter<BrickDestroyedEvent>,
 ) {
+    // iterate over the collision events
     for collision_event in collision_events.read() {
-        if let CollisionEvent::Stopped(brick, _, _) = collision_event {
-            commands.entity(*brick).despawn();
+        // extract the entities from the event
+        // in case it is of type Stopped
+        if let CollisionEvent::Stopped(entity_1, entity_2, _) = collision_event {
+            // loop over all entities that have the Brick component attached
+            for brick in query.iter() {
+                // if the brick is one of the collided entities,
+                // despawn it from the game
+                if brick == *entity_1 || brick == *entity_2 {
+                    commands.entity(brick).despawn();
+                    events.send(BrickDestroyedEvent);
+                }
+            }
         };
     }
 }
@@ -103,7 +119,8 @@ pub struct BrickPlugin;
 
 impl Plugin for BrickPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Startup, setup)
+        app.add_event::<BrickDestroyedEvent>()
+            .add_systems(Startup, setup)
             .add_systems(FixedUpdate, remove_brick_on_collision);
     }
 }
